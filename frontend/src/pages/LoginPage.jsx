@@ -7,6 +7,7 @@ function LoginPage(props) {
     <section className="min-h-screen flex flex-col">
       <div className="flex flex-1 items-center justify-center">
         <div className="rounded-lg px-4 lg:px-24 py-16 lg:max-w-xl sm:max-w-md w-full text-center bg-opacity-50 bg-blur">
+
           <form className="text-center">
             <h1 className="font-bold tracking-wider text-3xl mb-8 w-full text-gray-600">
               Sign in

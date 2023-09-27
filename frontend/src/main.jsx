@@ -15,9 +15,10 @@ import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
 import ContactPage from './pages/ContactPage.jsx';
 import MyFavoritePosts from "./pages/posts/MyFavoritePosts.jsx";
-import MyPosts from "./pages/posts/MyPosts.jsx";
-import MyProfile from "./pages/users/MyProfile.jsx";
-import MyFavoriteAuthors from "./pages/users/MyFavoriteAuthors.jsx";
+import MyPosts from './pages/posts/MyPosts.jsx';
+import PostPage from './pages/posts/PostPage.jsx';
+import MyProfile from './pages/users/MyProfile.jsx';
+import MyFavoriteAuthors from './pages/users/MyFavoriteAuthors.jsx';
 
 
 const router = createBrowserRouter(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
       <Route path='/contact' element={<ContactPage/>}/>
       <Route path='/myprofile' element={<MyProfile/>}/>
       <Route path='/myposts' element={<MyPosts/>}/>
+      <Route path='/post/:postId' element={<PostPage/>}/>
       <Route path='/myfavoriteposts' element={<MyFavoritePosts/>}/>
       <Route path='/myfavoriteauthors' element={<MyFavoriteAuthors/>}/>
     </Route>

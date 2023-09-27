@@ -25,7 +25,7 @@ function ProfileDropDown({ isProfileOpen, toggleProfile, handleLinkClick, setIsP
             </svg>
           </button>
           <div
-            className={`${'absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5'} ${isProfileOpen ? 'opacity-100' : 'opacity-0'}`}>
+            className={`${'absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5'} ${isProfileOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
             <div className="p-4">
               <div
                 className="group relative flex items-center gap-x-6 rounded-lg p-4 text-sm leading-6 hover:bg-gray-50">

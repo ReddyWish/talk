@@ -6,8 +6,7 @@ const products = [
     image: '/images/test.jpg',
     content:
       'Lightweight Drone with 4K Video, 48MP Photo, 34 Mins Flight Time, Less than 249 g, Tri-Directional Obstacle Sensing, Return to Home, Drone with Camera for Adults',
-    createdAt: 'xxx',
-    time: '4 min'
+    createdAt: 'xxx'
   },
   {
     _id: '2',
@@ -15,17 +14,30 @@ const products = [
     image: '/images/test.jpg',
     content:
       'Lightweight Drone with 4K Video, 48MP Photo, 34 Mins Flight Time, Less than 249 g, Tri-Directional Obstacle Sensing, Return to Home, Drone with Camera for Adults',
-    createdAt: 'xxx',
-    time: '4 min'
+    createdAt: 'xxx'
   },
   {
     _id: '3',
     title: 'DJI Mini 3 Pro (DJI RC)',
     image: '/images/test.jpg',
     content:
-      'Lightweight Drone with 4K Video, 48MP Photo, 34 Mins Flight Time, Less than 249 g, Tri-Directional Obstacle Sensing, Return to Home, Drone with Camera for Adults',
-    createdAt: 'xxx',
-    time: '4 min'
+      'Lightweight Drone with 4K Video, 48MP Photo, 34 Mins Flight Time, Less than 48MP Photo, 34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time, Less   34 Mins Flight Time,' +
+      ' Less   34 Mins Flight Time, Less than 48MP Photo, 34 Mins Flight Time, Less than 249 g, Tri-Directional Obstacle' +
+      ' Sensing, Return to Home, Drone with Camera for Directional Obstacle Sensing, Return to Home, Drone with Camera' +
+      ' for Adults',
+    createdAt: 'xxx'
   },
   {
     _id: '4',
@@ -34,7 +46,6 @@ const products = [
     content:
       'Lightweight Drone with 4K Video, 48MP Photo, 34 Mins Flight Time, Less than 249 g, Tri-Directional Obstacle Sensing, Return to Home, Drone with Camera for Adults',
     createdAt: 'xxx',
-    time: '4 min'
   },
 ]
 
