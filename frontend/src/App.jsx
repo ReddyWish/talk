@@ -6,7 +6,7 @@ function App() {
   return (
     <>
       <Header/>
-      <main className='p-20'>
+      <main className='px-4 sm:px-20 py-4 sm:py-10 mx-4 sm:mx-20"'>
         <Outlet/>
       </main>
     </>
