@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useSelector } from "react-redux";
 
-function MobileMenu({ isMobileMenuOpen, toggleMobileMenu, handleLinkClick }) {
-  const [isMobileProfileOpen, setIsMobileProfileOpen] = useState(true)
+function MobileMenu({ isMobileMenuOpen, toggleMobileMenu, handleLinkClick, logoutHandler }) {
+  const [isMobileProfileOpen, setIsMobileProfileOpen] = useState(true);
+  const { userInfo } = useSelector((state) => state.auth);
 
   const toggleMobileProfile = () => {
     setIsMobileProfileOpen(prev => !prev)
@@ -37,7 +39,7 @@ function MobileMenu({ isMobileMenuOpen, toggleMobileMenu, handleLinkClick }) {
 
 
               {/*....*/}
-              <div className="space-y-2 py-6">
+              {userInfo && <div className="space-y-2 py-6">
                 <div className="-mx-3">
                   <button type="button" onClick={() => toggleMobileProfile()}
                           className="flex w-full items-center justify-between rounded-lg py-2 pl-3 pr-3.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
@@ -51,20 +53,24 @@ function MobileMenu({ isMobileMenuOpen, toggleMobileMenu, handleLinkClick }) {
                   </button>
                   <div className="mt-2 space-y-2" id="disclosure-1" hidden={isMobileProfileOpen}>
                     <button onClick={() => handleLinkClick("/myprofile")}
-                       className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">My
-                      Profile</button>
+                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">My
+                      Profile
+                    </button>
                     <button onClick={() => handleLinkClick("/myposts")}
-                       className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">My
-                      Posts</button>
+                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">My
+                      Posts
+                    </button>
                     <button onClick={() => handleLinkClick("/myfavoriteposts")}
-                       className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Favorite
-                      Posts</button>
+                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Favorite
+                      Posts
+                    </button>
                     <button onClick={() => handleLinkClick("/myfavoriteauthors")}
-                       className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Favorite
-                      Authors</button>
+                            className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Favorite
+                      Authors
+                    </button>
                   </div>
                 </div>
-              </div>
+              </div>}
               {/*....*/}
               {/*<button onClick={() => handleLinkClick("/")} className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Posts</button>*/}
 
@@ -74,16 +80,26 @@ function MobileMenu({ isMobileMenuOpen, toggleMobileMenu, handleLinkClick }) {
               <button onClick={() => handleLinkClick('/about')}
                       className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">About
               </button>
-              <button onClick={() => handleLinkClick("/contact")}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Contact
-              </button>
+              {userInfo && <button onClick={() => handleLinkClick("/newpost")}
+                       className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Create
+                the Post
+              </button>}
             </div>
-            <div className="py-6">
-              <button onClick={() => handleLinkClick("/login")}
-                      className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
-                in
-              </button>
-            </div>
+            {userInfo ? (
+                <div className="py-6">
+                  <button onClick={logoutHandler}
+                          className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
+                    out
+                  </button>
+                </div>
+            ) : (
+              <div className="py-6">
+                <button onClick={() => handleLinkClick("/login")}
+                        className="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log
+                  in
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>

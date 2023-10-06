@@ -2,14 +2,16 @@ import React from 'react';
 import { useState, useRef } from 'react';
 import useOutsideClick from '../../hooks/useOutsideClick.js'
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function ProfileDropDown({ isProfileOpen, toggleProfile, handleLinkClick, setIsProfileOpen }) {
+  const { userInfo } = useSelector((state) => state.auth);
   const ref = useRef();
   useOutsideClick(ref, () => setIsProfileOpen(false))
   return (
 
     <>
-      <div className="hidden lg:flex lg:gap-x-12">
+
         <div className="relative">
           {/*<button type="button" className="flex items-center gap-x-1 text-sm font-semibold leading-6 text-gray-900" aria-expanded="false">*/}
           {/*  Posts*/}
@@ -72,10 +74,8 @@ function ProfileDropDown({ isProfileOpen, toggleProfile, handleLinkClick, setIsP
             </div>
           </div>
         </div>
-        <Link to="/authors" className="text-sm font-semibold leading-6 text-gray-900">Authors</Link>
-        <Link to="/about" className="text-sm font-semibold leading-6 text-gray-900">About</Link>
-        <Link to="/contact" className="text-sm font-semibold leading-6 text-gray-900">Contact</Link>
-      </div>
+
+
     </>
 
   );

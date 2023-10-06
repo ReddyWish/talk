@@ -11,16 +11,24 @@ import { Provider } from 'react-redux';
 import store from './store.js';
 import App from './App.jsx'
 import './index.css'
-import UsersList from './pages/users/UsersList.jsx';
+import UsersListPage from './pages/users/UsersListPage.jsx';
+import PrivateRoute from './components/PrivateRoute.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
 import RegisterPage from './pages/RegisterPage.jsx';
+import AdminRoute from './components/AdminRoute.jsx';
 import ContactPage from './pages/ContactPage.jsx';
-import MyFavoritePosts from "./pages/posts/MyFavoritePosts.jsx";
+import MyFavoritePosts from './pages/posts/MyFavoritePosts.jsx';
 import MyPosts from './pages/posts/MyPosts.jsx';
 import PostPage from './pages/posts/PostPage.jsx';
-import MyProfile from './pages/users/MyProfile.jsx';
-import MyFavoriteAuthors from './pages/users/MyFavoriteAuthors.jsx';
+import MyProfilePage from './pages/users/MyProfilePage.jsx';
+import MyFavoriteAuthorsPage from './pages/users/MyFavoriteAuthorsPage.jsx';
+import CreatePostPage from './pages/posts/CreatePostPage.jsx';
+import UsersProfilePage from './pages/users/UsersProfilePage.jsx';
+import EditMyProfilePage from './pages/posts/EditMyProfilePage.jsx';
+import UpdateUserByIdPage from './pages/users/UpdateUserByIdPage.jsx';
+import EditPostPage from './pages/posts/EditPostPage.jsx';
+import UsersPosts from "./pages/posts/UsersPosts.jsx";
 
 
 const router = createBrowserRouter(
@@ -30,13 +38,26 @@ const router = createBrowserRouter(
       <Route path='/about' element={<AboutPage/>}/>
       <Route path='/login' element={<LoginPage/>}/>
       <Route path='/register' element={<RegisterPage/>}/>
-      <Route path='/authors' element={<UsersList/>}/>
+      <Route path='/authors' element={<UsersListPage/>}/>
       <Route path='/contact' element={<ContactPage/>}/>
-      <Route path='/myprofile' element={<MyProfile/>}/>
-      <Route path='/myposts' element={<MyPosts/>}/>
       <Route path='/post/:postId' element={<PostPage/>}/>
-      <Route path='/myfavoriteposts' element={<MyFavoritePosts/>}/>
-      <Route path='/myfavoriteauthors' element={<MyFavoriteAuthors/>}/>
+
+      <Route path='' element={<PrivateRoute/>}>
+        <Route path='/myprofile' element={<MyProfilePage/>}/>
+        <Route path='/profile/:id' element={<UsersProfilePage/>}/>
+        <Route path='/editmyprofile' element={<EditMyProfilePage/>}/>
+        <Route path='/editpost/:id' element={<EditPostPage/>}/>
+        <Route path='/myposts' element={<MyPosts/>}/>
+        <Route path='/posts/:id' element={<UsersPosts/>}/>
+        <Route path='/newpost' element={<CreatePostPage/>}/>
+        <Route path='/myfavoriteposts' element={<MyFavoritePosts/>}/>
+        <Route path='/myfavoriteauthors' element={<MyFavoriteAuthorsPage/>}/>
+      </Route>
+
+      <Route path='' element={<AdminRoute/>}>
+        <Route path='/updateuser' element={<UpdateUserByIdPage/>}/>
+      </Route>
+
     </Route>
   )
 )

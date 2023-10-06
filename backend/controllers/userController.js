@@ -1,6 +1,7 @@
 import asyncHandler from '../middleware/asyncHandler.js';
 import User from '../models/userModel.js';
 import generateToken from "../utils/generateToken.js";
+import Post from "../models/postModel.js";
 
 
 
@@ -20,11 +21,14 @@ const loginUser = asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       avatar: user.avatar,
-      isAdmin: user.isAdmin
+      isAdmin: user.isAdmin,
+      country: user.country,
+      description: user.description,
+      profession: user.profession
     })
   } else {
     res.status(401);
-    throw new Error('Invalid enail or password')
+    throw new Error('Invalid email or password')
   }
 });
 
@@ -125,9 +129,20 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 
 // @desc Get users
 // @route GET /api/users/
-// @access Private
+// @access private
 const getUsersProfiles = asyncHandler(async (req, res) => {
-  res.send('Get all users');
+  const users = await User.find({});
+  res.status(200).json(users);
+});
+
+// @desc Get users
+// @route GET /api/users/posts/:id
+// @access private
+const getUsersPosts = asyncHandler(async (req, res) => {
+  const userId = req.params.id
+  const posts = await Post.find({ user: userId });
+
+  res.status(200).json(posts);
 });
 
 // @desc Delete users
@@ -140,10 +155,17 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 // @desc Get user by id
 // @route GET /api/users/:id
-// @access Private
+// @access
 const getUserById = asyncHandler(async (req, res) => {
   const id = req.params.id
-  res.send(`Get User with id ${id}`);
+  const user = await User.findById(id).select('-password');
+
+  if (user) {
+    res.status(200).json(user)
+  } else {
+    res.status(400);
+    throw new Error('User not found')
+  }
 });
 
 // @desc Update User By id
@@ -200,7 +222,7 @@ const getFavoriteUsers = asyncHandler(async (req, res) => {
 });
 
 // @desc delete User from favorites
-// @route DELETE /api/users/favorite/:id
+// @route PUT /api/users/favorite/remove/:id
 // @access Private
 const deleteUserFromFavorites = asyncHandler(async (req, res) => {
   const currentUser = await User.findById(req.user._id);
@@ -237,6 +259,7 @@ export {
   getUsersProfiles,
   deleteUser,
   getUserById,
+  getUsersPosts,
   updateUserById,
   saveUserAsFavorite,
   getFavoriteUsers,

@@ -7,6 +7,8 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 import posts from "./data/posts.js";
 import postRoutes from "./routes/postRoutes.js";
 import userRoutes from "./routes/userRoutes.js";
+import uploadRoutes from "./routes/uploadRoutes.js";
+import path from "path";
 
 const port = process.env.PORT || 5000;
 
@@ -20,6 +22,10 @@ app.use(cookieParser());
 
 app.use('/api/posts', postRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/upload', uploadRoutes);
+
+const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
 app.get('/', (req, res) => {
   res.send('API is running')

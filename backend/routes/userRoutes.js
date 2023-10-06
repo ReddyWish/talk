@@ -10,6 +10,7 @@ import {
   getUserProfile,
   updateUserProfile,
   getUsersProfiles,
+  getUsersPosts,
   deleteUser,
   getUserById,
   updateUserById,
@@ -27,10 +28,11 @@ router.route('/logout').post(protect, logoutUser) //private
 router.route('/profile').get(protect, getUserProfile) //private
 router.route('/profile').put(protect, updateUserProfile) //private
 router.route('/:id').delete(protect, admin, deleteUser) //private&admin
-router.route('/:id').get(protect, getUserById) //private
+router.route('/:id').get(getUserById)
 router.route('/:id').put(protect, admin, updateUserById) //private&admin
+router.route('/posts/:id').get(protect, getUsersPosts) //private
 router.route('/favorite/:id').put(protect, saveUserAsFavorite) //private
-router.route('/favorite/:id').delete(protect, deleteUserFromFavorites) //private
+router.route('/favorite/remove/:id').put(protect, deleteUserFromFavorites) //private
 
 
 export default router;
