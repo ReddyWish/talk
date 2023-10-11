@@ -44,6 +44,14 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User']
     }),
+    updateUserProfileById: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `${USERS_URL}/${id}`,
+        method: 'PUT',
+        body: data
+      }),
+      invalidatesTags: ['User']
+    }),
     registration: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/register`,
@@ -85,6 +93,7 @@ export const {
   useGetUserByIdQuery,
   useGetUsersPostsQuery,
   useUpdateUserProfileMutation,
+  useUpdateUserProfileByIdMutation,
   useGetUsersQuery,
   useGetFavoriteUsersQuery,
   useAddUserAsFavoriteMutation,

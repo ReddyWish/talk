@@ -25,10 +25,10 @@ import MyProfilePage from './pages/users/MyProfilePage.jsx';
 import MyFavoriteAuthorsPage from './pages/users/MyFavoriteAuthorsPage.jsx';
 import CreatePostPage from './pages/posts/CreatePostPage.jsx';
 import UsersProfilePage from './pages/users/UsersProfilePage.jsx';
-import EditMyProfilePage from './pages/posts/EditMyProfilePage.jsx';
-import UpdateUserByIdPage from './pages/users/UpdateUserByIdPage.jsx';
+import EditMyProfilePage from './pages/users/EditMyProfilePage.jsx';
 import EditPostPage from './pages/posts/EditPostPage.jsx';
 import UsersPosts from "./pages/posts/UsersPosts.jsx";
+import EditUsersProfilePage from "./pages/users/EditUsersProfilePage.jsx";
 
 
 const router = createBrowserRouter(
@@ -55,7 +55,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path='' element={<AdminRoute/>}>
-        <Route path='/updateuser' element={<UpdateUserByIdPage/>}/>
+        <Route path='/updateuser/:id' element={<EditUsersProfilePage/>}/>
       </Route>
 
     </Route>

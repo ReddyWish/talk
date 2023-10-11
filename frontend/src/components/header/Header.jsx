@@ -101,7 +101,7 @@ function Header(props) {
                     Posts
                   </button>
                   <button onClick={() => handleLinkClick("/myfavoriteauthors")}
-                          className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Favorite
+                           className="block rounded-lg py-2 pl-6 pr-3 text-sm font-semibold leading-7 text-gray-900 hover:bg-gray-50">Favorite
                     Authors
                   </button>
                 </div>
@@ -116,7 +116,7 @@ function Header(props) {
                              handleLinkClick={handleLinkClick}
                              setIsProfileOpen={setIsProfileOpen}/>
           )}
-          <Link to="/authors" className="text-sm font-semibold leading-6 text-gray-900">Authors</Link>
+          {userInfo && <Link to="/authors" className="text-sm font-semibold leading-6 text-gray-900">Authors</Link>}
           <Link to="/about" className="text-sm font-semibold leading-6 text-gray-900">About</Link>
           {userInfo &&
             <Link to="/newpost" className="text-sm font-semibold leading-6 text-gray-900">Create the Post</Link>}

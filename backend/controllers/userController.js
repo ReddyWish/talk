@@ -22,6 +22,8 @@ const loginUser = asyncHandler(async (req, res) => {
       email: user.email,
       avatar: user.avatar,
       isAdmin: user.isAdmin,
+      favoritePosts: user.favoritePosts,
+      favoriteAuthors: user.favoriteAuthors,
       country: user.country,
       description: user.description,
       profession: user.profession
@@ -172,7 +174,38 @@ const getUserById = asyncHandler(async (req, res) => {
 // @route PUT /api/users/:id
 // @access Private/Admin
 const updateUserById = asyncHandler(async (req, res) => {
+  const id = req.params.id;
+  console.log(id)
+  console.log(req.body)
+  const user = await User.findById(req.params.id)
 
+  if (user) {
+    user.name = req.body.name || user.name;
+    user.email = req.body.email || user.email;
+    user.country = req.body.country || user.country;
+    user.profession = req.body.profession || user.profession;
+    user.description = req.body.description || user.description;
+    user.avatar = req.body.avatar || user.avatar;
+
+    if (req.body.password) {
+      user.password = req.body.password
+    }
+    const updatedUser = await user.save();
+
+    res.status(200).json({
+      _id: updatedUser._id,
+      name: updatedUser.name,
+      email: updatedUser.email,
+      country: updatedUser.country,
+      profession: updatedUser.profession,
+      description: updatedUser.description,
+      avatar: updatedUser.avatar,
+      isAdmin: updatedUser.isAdmin,
+    });
+  } else {
+    res.status(400);
+    throw new Error('User not found')
+  }
 });
 
 // @desc Save User as a favorite

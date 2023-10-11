@@ -10,11 +10,11 @@ const commentSchema = mongoose.Schema({
     type: String,
     required: true
   },
-  likes: {
-    type: Number,
-    default: 0,
-    required: true,
-  }
+  likes: [
+    {
+      type: String,
+    }
+  ]
 }, {
   timestamps: true,
 })
@@ -38,12 +38,16 @@ const postSchema = new mongoose.Schema({
     required: true,
     default: ""
   },
-  likes: {
-    type: Number,
-    default: 0,
-    required: true,
-  },
+  likes: [
+    {
+    type: String,
+  }],
   comments: [commentSchema],
+  numComments: {
+    type: Number,
+    required: true,
+    default: 0
+  },
 }, {
   timestamps: true
 });

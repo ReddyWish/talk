@@ -1,11 +1,21 @@
 import { Link } from "react-router-dom";
 import Post from '../components/Post.jsx';
 import { useGetPostsQuery } from "../slices/postsApiSlice.js";
+import { setPostsCredentials } from "../slices/postsListSlice.js";
+import { useDispatch } from 'react-redux';
 import Loader from "../components/Loader.jsx";
+import { useEffect } from "react";
 
 function HomePage(props) {
 
   const { data: posts, isLoading, error } = useGetPostsQuery();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (posts) {
+      dispatch(setPostsCredentials(posts))
+    }
+  }, [dispatch, posts]);
 
   return (
     <>

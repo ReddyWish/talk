@@ -29,12 +29,48 @@ export const postsApiSlice = apiSlice.injectEndpoints({
       }),
       keepUnusedDataFor: 5
     }),
+    getMyFavoritePosts: builder.query({
+      query: () => ({
+        url: `${POSTS_URL}/myfavoriteposts`
+      }),
+      keepUnusedDataFor: 5
+    }),
     createPost: builder.mutation({
       query: (post) => ({
         url: POSTS_URL,
         method: 'POST',
         body: { ...post }
       })
+    }),
+    likePost: builder.mutation({
+      query: ({ postId }) => ({
+        url: `${POSTS_URL}/like/${postId}`,
+        method: 'PUT',
+      }),
+      invalidatesTags: ['Post']
+    }),
+    createPostComment: builder.mutation({
+      query: ({ comment, postId }) => ({
+        url: `${POSTS_URL}/${postId}/comments`,
+        method: 'POST',
+        body: { comment }
+      }),
+      invalidatesTags: ['Post']
+    }),
+    deletePostComment: builder.mutation({
+      query: ({ commentId, postId }) => ({
+        url: `${POSTS_URL}/${postId}/comments/${commentId}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['Post']
+    }),
+    editPostComment: builder.mutation({
+      query: ({ inputComment, commentId, postId }) => ({
+        url: `${POSTS_URL}/${postId}/comments/${commentId}`,
+        method: 'PUT',
+        body: { comment: inputComment }
+      }),
+      invalidatesTags: ['Post']
     }),
     uploadPostImage: builder.mutation({
       query: (data) => ({
@@ -49,7 +85,19 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         method: 'PUT',
         body: data
       })
-    })
+    }),
+    addPostToFavorites: builder.mutation({
+      query: (id) => ({
+        url: `${POSTS_URL}/favorite/${id}`,
+        method: 'PUT',
+      })
+    }),
+    removePostFromFavorites: builder.mutation({
+      query: (id) => ({
+        url: `${POSTS_URL}/favorite/remove/${id}`,
+        method: 'PUT',
+      })
+    }),
   }),
 });
 
@@ -58,7 +106,14 @@ export const {
   useGetPostQuery,
   useCreatePostMutation,
   useGetMyPostsQuery,
+  useGetMyFavoritePostsQuery,
   useUploadPostImageMutation,
   useUpdatePostMutation,
+  useCreatePostCommentMutation,
   useDeletePostMutation,
+  useLikePostMutation,
+  useDeletePostCommentMutation,
+  useEditPostCommentMutation,
+  useAddPostToFavoritesMutation,
+  useRemovePostFromFavoritesMutation
 } = postsApiSlice;

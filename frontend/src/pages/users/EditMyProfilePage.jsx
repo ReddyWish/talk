@@ -12,7 +12,6 @@ function EditMyProfilePage(props) {
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.auth);
   const [updateUserProfile, { isLoading: loadingUpdateUserProfile }] = useUpdateUserProfileMutation();
-  console.log(userInfo)
   const form = useForm({
     defaultValues: {
       name: userInfo?.name,

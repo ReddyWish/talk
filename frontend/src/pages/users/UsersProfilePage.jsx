@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import {
   useAddUserAsFavoriteMutation,
@@ -65,7 +64,7 @@ function UsersProfilePage(props) {
       </div>
       <div className="flex flex-col justify-center items-center gap-2 my-3">
         <div className="font-semibold text-center mx-4">
-          <Link to={`/myposts`} state={{ user }} className="text-gray-600">Posts</Link>
+          <Link to={`/posts/${id}`} state={{ user }} className="text-gray-600">Posts</Link>
         </div>
         <blockquote className="text-m text-gray-900">
           <svg className="w-3 h-3 text-gray-400 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 14">

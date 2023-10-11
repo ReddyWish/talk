@@ -59,7 +59,7 @@ function UserListRow({ user, refetchFavoriteUsers, favoriteUsers }) {
 
       {userInfo.isAdmin ? (<td className="px-6 py-4">
         <div className="flex justify-end gap-4">
-          <Link x-data="{ tooltip: 'Delete' }" to="#">
+          <Link x-data="{ tooltip: 'Delete' }" to='#'>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -76,7 +76,7 @@ function UserListRow({ user, refetchFavoriteUsers, favoriteUsers }) {
               />
             </svg>
           </Link>
-          <Link x-data="{ tooltip: 'Edite' }" to="#">
+          <Link x-data="{ tooltip: 'Edite' }" to={`/updateuser/${user._id}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -96,8 +96,8 @@ function UserListRow({ user, refetchFavoriteUsers, favoriteUsers }) {
         </div>
       </td>) : (
         !isFavorite
-          ? <MdBookmarkAdd onClick={() => handleAddUserToFavorite(user._id)} className='mb-2 ml-10 cursor-pointer h-6 w-6' title='add to favorites'/>
-          : <MdBookmarkAdded onClick={() => handleRemoveUserFromFavorites(user._id)} className='mb-2 ml-10 cursor-pointer h-6 w-6' title='remove from favorites'/>
+          ? <td> <MdBookmarkAdd onClick={() => handleAddUserToFavorite(user._id)} className='mb-2 ml-10 cursor-pointer h-6 w-6' title='add to favorites'/> </td>
+          :  <td> <MdBookmarkAdded onClick={() => handleRemoveUserFromFavorites(user._id)} className='mb-2 ml-10 cursor-pointer h-6 w-6' title='remove from favorites'/> </td>
       )}
     </tr>
   );
