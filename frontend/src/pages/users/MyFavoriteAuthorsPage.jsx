@@ -5,7 +5,6 @@ import FavoriteUser from "../../components/FavoriteUser.jsx";
 
 function MyFavoriteAuthorsPage(props) {
   const { data: favoriteUsers, isLoading: favoriteUsersLoading, refetch } = useGetFavoriteUsersQuery();
-  console.log(favoriteUsers)
   return (
     <section>
       <div className="pb-4 border-b border-gray-600">

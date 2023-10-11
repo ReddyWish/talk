@@ -152,7 +152,21 @@ const getUsersPosts = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const deleteUser = asyncHandler(async (req, res) => {
   const id = req.params.id
-  res.send(`Delete User with id ${id}`);
+  const user = await User.findById(id);
+
+  if (!user) {
+    return res.status(404).json({ message: 'User not found' });
+  }
+
+  const userPosts = await Post.find({ user: id });
+
+  await Promise.all(userPosts.map(async (post) => {
+      await Post.deleteOne({ _id: post._id });
+  }))
+
+  await User.findByIdAndDelete(id);
+
+  res.status(200).json({ message: 'User deleted' })
 });
 
 // @desc Get user by id
@@ -175,8 +189,6 @@ const getUserById = asyncHandler(async (req, res) => {
 // @access Private/Admin
 const updateUserById = asyncHandler(async (req, res) => {
   const id = req.params.id;
-  console.log(id)
-  console.log(req.body)
   const user = await User.findById(req.params.id)
 
   if (user) {

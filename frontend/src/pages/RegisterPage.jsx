@@ -5,6 +5,7 @@ import { useRegistrationMutation } from '../slices/usersApiSlice.js';
 import { setCredentials } from '../slices/authSlice.js';
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from "react-toastify";
 
 function RegisterPage(props) {
   const dispatch = useDispatch();
@@ -34,7 +35,6 @@ function RegisterPage(props) {
       try {
         const res = await registration({ name: data.name, email: data.email, password: data.password }).unwrap();
         dispatch(setCredentials({ ...res }));
-        console.log(res)
         navigate('/')
       } catch (err) {
         toast.error(err?.data?.message || err.error);

@@ -8,7 +8,6 @@ function CreatePostPage(props) {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
-  console.log(image)
 
   const navigate = useNavigate();
 

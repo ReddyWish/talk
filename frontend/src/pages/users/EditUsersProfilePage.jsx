@@ -1,28 +1,40 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUploadPostImageMutation } from "../../slices/postsApiSlice.js";
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import Loader from "../../components/Loader.jsx";
 import { toast } from "react-toastify";
+import axios from "axios";
 import { useGetUserByIdQuery, useUpdateUserProfileByIdMutation } from "../../slices/usersApiSlice.js";
 import { useForm } from "react-hook-form";
-import { setCredentials } from "../../slices/authSlice.js";
-import { useSelector, useDispatch } from "react-redux";
 
 function EditUsersProfilePage(props) {
   const { id } = useParams();
-  const { data: user, isLoading } = useGetUserByIdQuery(id);
-  console.log(user)
+  // const { data: user, isLoading } = useGetUserByIdQuery(id);
+  const [countries, setCountries] = useState([]);
+  const location = useLocation();
+  const { user } = location.state || {};
 
-  const dispatch = useDispatch();
+  useEffect(() => {
+    const getCountries = async () => {
+      try {
+        const { data } = await axios.get('https://restcountries.com/v3.1/independent?status=true');
+        setCountries(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getCountries()
+  }, []);
+
   const navigate = useNavigate();
   const [updateUserProfileById, { isLoading: loadingUpdateUserProfile }] = useUpdateUserProfileByIdMutation();
   const form = useForm({
     defaultValues: {
-      name: user?.name,
-      email: user?.email,
-      password: user?.password,
-      description: user?.description,
-      profession: user?.profession,
-      country: user?.country,
+      name: user?.name || '',
+      email: user?.email || '',
+      description: user?.description || '',
+      profession: user?.profession || '',
+      country: user?.country || '',
     }
   });
   const { register, control, handleSubmit, formState } = form;
@@ -36,10 +48,8 @@ function EditUsersProfilePage(props) {
 
   const submitHandler = async (data) => {
     try {
-      const res = await updateUserProfileById({
-     data, id
-      }).unwrap();
-      navigate("/")
+      const res = await updateUserProfileById({ data, id }).unwrap();
+      navigate(`/profile/${id}`)
     } catch (err) {
       toast.error(err?.data?.message || err.error)
     }
@@ -62,7 +72,7 @@ function EditUsersProfilePage(props) {
     <div className="inputs w-full max-w-2xl p-6 mx-auto">
       <h2 className="text-2xl text-gray-900">Profile Setting</h2>
 
-      <div className="flex flex-col rounded  shadow p-6">
+        <div className="flex flex-col rounded  shadow p-6">
         <form className='w-full' onSubmit={handleSubmit(submitHandler)} noValidate>
           <div className='w-full mb-6'>
             <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>avatar</label>
@@ -80,7 +90,8 @@ function EditUsersProfilePage(props) {
           <div className="pb-6">
             <label htmlFor="name" className="font-semibold text-gray-700 block pb-1">Name</label>
             <div>
-              <input id="name" type="text" defaultValue={user?.name} className={`border ${errors.name ? 'border-2 border-red-100' : 'border-gray-400'} px-4 py-2 w-full`}
+              <input id="name" type="text"
+                     className={`border ${errors.name ? 'border-2 border-red-100' : 'border-gray-400'} px-4 py-2 w-full`}
                      {...register('name', {
                        required: {
                          value: true,
@@ -92,7 +103,8 @@ function EditUsersProfilePage(props) {
           </div>
           <div className="pb-4">
             <label htmlFor="email" className="font-semibold text-gray-700 block pb-1">Email</label>
-            <input id="email" type='email' defaultValue={user?.email} className={`border ${errors.email ? 'border-2 border-red-100' : 'border-gray-400'} px-4 py-2 w-full`}
+            <input id="email" type='email'
+                   className={`border ${errors.email ? 'border-2 border-red-100' : 'border-gray-400'} px-4 py-2 w-full`}
                    {...register('email', {
                      required: 'Please mention your email',
                      pattern: {
@@ -105,17 +117,26 @@ function EditUsersProfilePage(props) {
           </div>
           <div className="pb-4">
             <label htmlFor="profession" className="font-semibold text-gray-700 block pb-1">Profession</label>
-            <input id="profession" defaultValue={user?.profession} className="border border-gray-400 px-4 py-2 w-full" type="text"
+            <input id="profession" className="border border-gray-400 px-4 py-2 w-full" type="text"
                    {...register('profession')}/>
           </div>
           <div className="pb-4">
             <label htmlFor="country" className="font-semibold text-gray-700 block pb-1">Country</label>
-            <input id="country" defaultValue={user?.country} className="border border-gray-400 px-4 py-2 w-full" type="text"
-                   {...register('country')}/>
+            <select name="country" id="country"
+                    className="border border-gray-400 px-4 py-2 w-full" {...register('country')}>
+              <option value="">Select a country</option>
+              {countries.map((country) => (
+                <option key={country?.name.common} value={country?.name.common}>
+                  {country.name.common}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="pb-4">
             <label htmlFor="password" className="font-semibold text-gray-700 block pb-1">Password</label>
-            <input id="password" className={`border ${errors.password ? 'border-2 border-red-100' : 'border-gray-400'} px-4 py-2 w-full`} type="password"
+            <input id="password"
+                   className={`border ${errors.password ? 'border-2 border-red-100' : 'border-gray-400'} px-4 py-2 w-full`}
+                   type="password"
                    {...register('password', {
                      required: 'Password is required',
                      pattern: {
@@ -127,8 +148,9 @@ function EditUsersProfilePage(props) {
           </div>
 
           <div className="pb-4">
-            <label htmlFor="description" className="font-semibold text-gray-700 block pb-1">Description <span className='font-light text-xs'>(Write a brief intro about yourself or your motto)</span></label>
-            <input id="description" defaultValue={user?.description} className="border border-gray-400 px-4 py-2 w-full" type="text"
+            <label htmlFor="description" className="font-semibold text-gray-700 block pb-1">Description <span
+              className='font-light text-xs'>(Write a brief intro about yourself or your motto)</span></label>
+            <input id="description" className="border border-gray-400 px-4 py-2 w-full" type="text"
                    {...register('description')} />
           </div>
           <div className="py-2">

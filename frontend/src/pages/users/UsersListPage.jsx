@@ -3,9 +3,10 @@ import { useGetUsersQuery, useGetFavoriteUsersQuery } from '../../slices/usersAp
 import UserListRow from '../../components/UserListRow.jsx';
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 function UsersListPage(props) {
-  const { data: users, isLoading: usersLoading } = useGetUsersQuery();
+  const { data: users, isLoading: usersLoading, refetch: refetchAllUsers } = useGetUsersQuery();
   const { data: favoriteUsers, isLoading: favoriteUsersLoading, refetch } = useGetFavoriteUsersQuery();
   const { userInfo } = useSelector((state) => state.auth);
   const navigate = useNavigate();
@@ -34,9 +35,9 @@ function UsersListPage(props) {
         <tbody className="divide-y divide-gray-100 border-t border-gray-100">
         {
           users?.map(user => (
-            userInfo._id === user._id
+            userInfo?._id === user?._id
               ? ''
-              : <UserListRow key={user._id} user={user} refetchFavoriteUsers={handleRefetchFavoriteUsers} favoriteUsers={favoriteUsers}/>
+              : <UserListRow key={user._id} user={user} refetchAllUsers={refetchAllUsers} refetchFavoriteUsers={handleRefetchFavoriteUsers} favoriteUsers={favoriteUsers}/>
           ))
         }
 

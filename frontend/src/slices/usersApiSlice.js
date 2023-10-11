@@ -52,6 +52,13 @@ export const usersApiSlice = apiSlice.injectEndpoints({
       }),
       invalidatesTags: ['User']
     }),
+    deleteUserProfile: builder.mutation({
+      query: ( id ) => ({
+        url: `${USERS_URL}/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: ['User']
+    }),
     registration: builder.mutation({
       query: (data) => ({
         url: `${USERS_URL}/register`,
@@ -98,5 +105,6 @@ export const {
   useGetFavoriteUsersQuery,
   useAddUserAsFavoriteMutation,
   useRemoveUserFromFavoritesMutation,
+  useDeleteUserProfileMutation,
   useGetUserProfileQuery,
 } = usersApiSlice;

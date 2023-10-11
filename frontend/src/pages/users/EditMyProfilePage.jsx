@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useUploadPostImageMutation } from "../../slices/postsApiSlice.js";
 import { useNavigate } from 'react-router-dom'
 import { toast } from "react-toastify";
@@ -6,12 +6,27 @@ import { useUpdateUserProfileMutation } from "../../slices/usersApiSlice.js";
 import { useForm } from "react-hook-form";
 import { setCredentials } from "../../slices/authSlice.js";
 import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
 
 function EditMyProfilePage(props) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { userInfo } = useSelector((state) => state.auth);
   const [updateUserProfile, { isLoading: loadingUpdateUserProfile }] = useUpdateUserProfileMutation();
+  const [countries, setCountries] = useState([]);
+
+  useEffect(() => {
+    const getCountries = async () => {
+      try {
+        const { data } = await axios.get('https://restcountries.com/v3.1/independent?status=true');
+        setCountries(data)
+      } catch (err) {
+        console.log(err)
+      }
+    }
+    getCountries()
+  }, []);
+
   const form = useForm({
     defaultValues: {
       name: userInfo?.name,
@@ -114,8 +129,14 @@ function EditMyProfilePage(props) {
           </div>
           <div className="pb-4">
             <label htmlFor="country" className="font-semibold text-gray-700 block pb-1">Country</label>
-            <input id="country" className="border border-gray-400 px-4 py-2 w-full" type="text"
-                   {...register('country')}/>
+            <select name="country" id="country" className="border border-gray-400 px-4 py-2 w-full" { ...register('country') }>
+              <option value="">Select a country</option>
+              {countries.map((country) => (
+                <option key={country?.name.common} value={country?.name.common}>
+                  {country.name.common}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="pb-4">
             <label htmlFor="password" className="font-semibold text-gray-700 block pb-1">Password</label>

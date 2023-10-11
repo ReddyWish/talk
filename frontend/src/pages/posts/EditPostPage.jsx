@@ -14,8 +14,6 @@ function EditPostPage(props) {
 
   const { data: post, isLoading, refetch, error } = useGetPostQuery(id);
 
-  console.log(isLoading)
-
   const [updatePost] = useUpdatePostMutation();
 
   const form = useForm();
@@ -26,7 +24,6 @@ function EditPostPage(props) {
   const [uploadPostImage, { isLoading: loadingUpload }] = useUploadPostImageMutation();
 
   const submitHandler = async (data) => {
-    console.log(data, id, "function")
     try {
       await updatePost({ data, id })
       refetch()
