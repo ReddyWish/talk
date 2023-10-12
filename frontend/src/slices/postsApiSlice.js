@@ -4,8 +4,12 @@ import { apiSlice } from "./apiSlice.js";
 export const postsApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     getPosts: builder.query({
-      query: () => ({
-        url: POSTS_URL
+      query: ({ keyword, pageNumber }) => ({
+        url: POSTS_URL,
+        params: {
+          keyword,
+          pageNumber,
+        }
       }),
       keepUnusedDataFor: 5
     }),
@@ -86,6 +90,13 @@ export const postsApiSlice = apiSlice.injectEndpoints({
         body: data
       })
     }),
+    editPost: builder.mutation({
+      query: ({ data, id }) => ({
+        url: `${POSTS_URL}/edit/${id}`,
+        method: 'PUT',
+        body: data
+      })
+    }),
     addPostToFavorites: builder.mutation({
       query: (id) => ({
         url: `${POSTS_URL}/favorite/${id}`,
@@ -109,6 +120,7 @@ export const {
   useGetMyFavoritePostsQuery,
   useUploadPostImageMutation,
   useUpdatePostMutation,
+  useEditPostMutation,
   useCreatePostCommentMutation,
   useDeletePostMutation,
   useLikePostMutation,

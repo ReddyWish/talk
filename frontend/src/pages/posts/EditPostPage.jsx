@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useGetPostQuery, useUploadPostImageMutation } from "../../slices/postsApiSlice.js";
+import { useGetPostQuery, useUploadPostImageMutation, useEditPostMutation } from "../../slices/postsApiSlice.js";
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from "react-toastify";
 import { useUpdatePostMutation } from "../../slices/postsApiSlice.js";
@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 function EditPostPage(props) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { userInfo } = useSelector((state) => state.auth);
 
   const { data: post, isLoading, refetch, error } = useGetPostQuery(id);
 
@@ -22,6 +23,18 @@ function EditPostPage(props) {
   const { errors } = formState;
 
   const [uploadPostImage, { isLoading: loadingUpload }] = useUploadPostImageMutation();
+
+  const [editPost] = useEditPostMutation();
+
+  const handleEditPostByAdmin = async (data) => {
+    try {
+      await editPost({ data, id });
+      refetch()
+      navigate(`/post/${id}`)
+    } catch (err) {
+      toast.error(err?.data?.message || err.error)
+    }
+  }
 
   const submitHandler = async (data) => {
     try {
@@ -54,7 +67,7 @@ function EditPostPage(props) {
             <h2 className="text-2xl text-gray-900">Post editing</h2>
 
             <div className="flex flex-col rounded  shadow p-6">
-              <form className='w-full' onSubmit={handleSubmit(submitHandler)} noValidate>
+              <form className='w-full' onSubmit={userInfo.isAdmin ? handleSubmit(handleEditPostByAdmin) : handleSubmit(submitHandler)} noValidate>
                 <div className='w-full mb-6'>
                   <label className='block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2'>Image</label>
                   <div

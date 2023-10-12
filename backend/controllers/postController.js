@@ -7,7 +7,14 @@ import User from "../models/userModel.js";
 // @route GET /api/posts
 // @access Public
 const getPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({}).populate('user', 'name', );
+  const pageSize = 6;
+  const page = Number(req.query.pageNumber) || 1;
+
+  const keyword = req.query.keyword ? { title: { $regex: req.query.keyword, $options: 'i' } } : {};
+
+  const count = await Post.countDocuments({ ...keyword });
+
+  const posts = await Post.find({ ...keyword }).populate('user', 'name', ).limit(pageSize).skip(pageSize * (page - 1));
 
   const postsWithUsername = posts.map((post) => ({
     _id: post._id,
@@ -21,7 +28,7 @@ const getPosts = asyncHandler(async (req, res) => {
     username: post.user.name,
   }));
 
-  res.json(postsWithUsername);
+  res.json({ postsWithUsername, page, pages: Math.ceil(count / pageSize)  });
 });
 
 // @desc Fetch post
@@ -218,6 +225,34 @@ const updatePost = asyncHandler(async (req, res) => {
   }
 })
 
+// @desc Update post
+// @route PUT /api/posts/edit/:id
+// @access Private
+const editPost = asyncHandler(async (req, res) => {
+  const id = req.params.id
+  const post = await Post.findById(id)
+
+  if (post) {
+    post.title = req.body.title || post.title;
+    post.content = req.body.content || post.content;
+    post.image = req.body.image || post.image;
+
+    const updatedPost = await post.save();
+
+    res.status(200).json({
+      _id: updatedPost._id,
+      user: updatedPost.user,
+      title: updatedPost.title,
+      content: updatedPost.content,
+      image: updatedPost.image,
+      likes: updatedPost.likes
+    });
+  } else {
+    res.status(400);
+    throw new Error('post not found')
+  }
+})
+
 // @desc Add post to favorites
 // @route PUT /api/posts/favorite/:id
 // @access Private
@@ -281,6 +316,7 @@ export {
   getPostById,
   deletePost,
   updatePost,
+  editPost,
   addPostToFavorites,
   getMyPosts,
   createPostComment,

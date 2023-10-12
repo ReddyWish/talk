@@ -5,19 +5,30 @@ import { MdBookmarkAdd, MdBookmarkAdded } from 'react-icons/md';
 import {
   useGetPostQuery,
   useAddPostToFavoritesMutation,
-  useRemovePostFromFavoritesMutation,
+    useRemovePostFromFavoritesMutation,
   useCreatePostCommentMutation
 } from '../../slices/postsApiSlice.js';
 import { useGetUserByIdQuery, useGetUserProfileQuery } from '../../slices/usersApiSlice.js';
 import { useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import Comment from "../../components/Comment.jsx";
+import { FiSettings } from 'react-icons/fi';
 import React, { useState, useEffect } from "react";
 
 
 function PostPage(props) {
   const [comment, setComment] = useState('');
-  const [openCommentId, setOpenCommentId] = useState(null)
+  const [openCommentId, setOpenCommentId] = useState(null);
+
+  // const [editPost] = useEditPostMutation();
+
+  // const handleEditPostByAdmin = async () => {
+  //   try {
+  //
+  //   } catch (err) {
+  //     toast.error()
+  //   }
+  // }
 
   const handleCommentOpen = (commentId) => {
     setOpenCommentId(commentId)
@@ -84,6 +95,7 @@ function PostPage(props) {
             <h2 className="text-4xl font-semiboldleading-tight text-neutral-600">
               {post?.title}
             </h2>
+            {userInfo.isAdmin && <Link to={`/editpost/${post?._id}`} className='underline'>Edit post</Link>}
             {
               userInfo && (isFavorite
                 ? (<MdBookmarkAdded className='mt-3 w-4 h-4 cursor-pointer' title='Remove From Favorites'
@@ -92,10 +104,8 @@ function PostPage(props) {
                                   onClick={() => handleAddPostToFavorites(postId)}/>))
             }
           </div>
-
           <div className="flex pt-3 pb-2 space-x-1 text-sm text-gray-500">
             <time dateTime="2020-03-10"> Mar 10, 2020</time>
-
             <span aria-hidden="true"> · {calculateMinutesOfReading(post?.content)} min read</span>
             <span aria-hidden="true"> · By {user?.name}</span>
 

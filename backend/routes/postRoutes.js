@@ -13,9 +13,9 @@ import {
   updatePost,
   addPostToFavorites,
   deletePostFromFavorites,
-  likePost
+  likePost, editPost
 } from '../controllers/postController.js';
-import { protect } from "../middleware/authMiddleware.js";
+import { protect, admin } from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 
@@ -25,6 +25,7 @@ router.route('/myfavoriteposts').get(protect, getMyFavoritePosts);
 router.route('/:id/comments').post(protect, createPostComment);
 router.route('/:id/comments/:commentId').put(protect, editPostComment).delete(protect, deletePostComment);
 router.route('/:id').get(getPostById).delete(deletePost).put(updatePost);
+router.route('/edit/:id').put(protect, admin, editPost)
 router.route('/like/:id').put(protect, likePost)
 router.route('/favorite/:id').put(protect, addPostToFavorites)
 router.route('/favorite/remove/:id').put(protect, deletePostFromFavorites)
