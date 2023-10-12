@@ -55,14 +55,14 @@ function Post({ post }) {
               <p className="text-lg font-normal text-gray-500 line-clamp-4">{post.content}</p>
             </Link>
           </div>
-          <div className='flex'>
+          {userInfo && <div className='flex'>
             {
               givenLike
-              ? (<AiFillLike onClick={handlePostLike}/>)
+                ? (<AiFillLike onClick={handlePostLike}/>)
                 : (<AiOutlineLike onClick={handlePostLike}/>)
             }
             <p className='text-xs ml-1'>{likeAmount}</p>
-          </div>
+          </div>}
         </div>
       </div>
     </div>
