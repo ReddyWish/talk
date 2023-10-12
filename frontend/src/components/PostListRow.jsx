@@ -20,25 +20,29 @@ function PostListRow({ post, user, refetchPosts }) {
 
   return (
     <tr className="hover:bg-gray-50">
-      <th className="flex gap-3 px-6 py-4 font-normal text-gray-900">
-        <div className="relative h-10 w-10">
+      <th className="flex gap-2 p-2 text-sm font-normal text-gray-900">
+        <div className="relative h-8 w-8">
           <img
             className="h-full w-full rounded-full object-cover object-center"
-            src={ user?.avatar ? user?.avatar : "/images/unknownuser.jpg" }
+            src={user?.avatar ? user?.avatar : "/images/unknownuser.jpg"}
             alt=""
           />
         </div>
-        <div className="text-sm pt-2">
-          <div className="font-medium text-gray-700"><Link to={`/myprofile`}>{ user?.name }</Link></div>
+        <div className="text-xs">
+          <div className="font-medium text-gray-700">
+            <Link to={`/myprofile`}>{user?.name}</Link>
+          </div>
         </div>
       </th>
 
+      <td className="px-2 py-2 text-sm">
+        <Link to={`/post/${post._id}`} className="text-blue-500">
+          {post?.title}
+        </Link>
+      </td>
 
-        <td className="px-6 py-4"><Link to={`/post/${post._id}`}>{ post?.title }</Link></td>
-
-
-      <td className="px-6 py-4">
-        <div className="flex justify-end gap-4">
+      <td className="px-2 py-2 text-sm">
+        <div className="flex justify-end gap-2">
           <button x-data="{ tooltip: 'Delete' }" onClick={() => handleDeletePost(post._id)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -46,7 +50,7 @@ function PostListRow({ post, user, refetchPosts }) {
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="h-6 w-6"
+              className="h-5 w-5"
               x-tooltip="tooltip"
             >
               <path
@@ -56,14 +60,14 @@ function PostListRow({ post, user, refetchPosts }) {
               />
             </svg>
           </button>
-          <Link x-data="{ tooltip: 'Edite' }" to={`/editpost/${post._id}`}>
+          <Link x-data="{ tooltip: 'Edit' }" to={`/editpost/${post._id}`}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth="1.5"
               stroke="currentColor"
-              className="h-6 w-6"
+              className="h-5 w-5"
               x-tooltip="tooltip"
             >
               <path
@@ -76,6 +80,7 @@ function PostListRow({ post, user, refetchPosts }) {
         </div>
       </td>
     </tr>
+
   );
 }
 
