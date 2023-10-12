@@ -20,16 +20,6 @@ function PostPage(props) {
   const [comment, setComment] = useState('');
   const [openCommentId, setOpenCommentId] = useState(null);
 
-  // const [editPost] = useEditPostMutation();
-
-  // const handleEditPostByAdmin = async () => {
-  //   try {
-  //
-  //   } catch (err) {
-  //     toast.error()
-  //   }
-  // }
-
   const handleCommentOpen = (commentId) => {
     setOpenCommentId(commentId)
   }
@@ -95,7 +85,7 @@ function PostPage(props) {
             <h2 className="text-4xl font-semiboldleading-tight text-neutral-600">
               {post?.title}
             </h2>
-            {userInfo.isAdmin && <Link to={`/editpost/${post?._id}`} className='underline'>Edit post</Link>}
+            {userInfo?.isAdmin && <Link to={`/editpost/${post?._id}`} className='underline'>Edit post</Link>}
             {
               userInfo && (isFavorite
                 ? (<MdBookmarkAdded className='mt-3 w-4 h-4 cursor-pointer' title='Remove From Favorites'
